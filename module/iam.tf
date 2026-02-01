@@ -65,9 +65,13 @@ resource "aws_iam_role_policy_attachment" "eks-AmazonEC2ContainerRegistryReadOnl
 
 
 # OIDC
+resource "random_pet" "eks_oidc_pet" {
+  length = 2
+}
+
 resource "aws_iam_role" "eks_oidc" {
   assume_role_policy = data.aws_iam_policy_document.eks_oidc_assume_role_policy.json
-  name               = "${local.cluster_name}-oidc-role"
+  name               = "${local.cluster_name}-oidc-role-${random_pet.eks_oidc_pet.id}"
 }
 
 resource "aws_iam_policy" "eks-oidc-policy" {

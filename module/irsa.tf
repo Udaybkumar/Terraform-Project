@@ -1,8 +1,12 @@
 #---------------------------------------------------------------
 # IAM Role for Service Account - AWS EBS CSI DRIVER
 #---------------------------------------------------------------
+resource "random_pet" "ebs_csi_driver_pet" {
+  length = 2
+}
+
 resource "aws_iam_role" "ebs_csi_driver_role" {
-  name = "${var.cluster-name}-ebs-csi-driver-role"
+  name = "${var.cluster-name}-ebs-csi-driver-role-${random_pet.ebs_csi_driver_pet.id}"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -31,8 +35,11 @@ resource "aws_iam_role_policy_attachment" "ebs_csi_driver_policy_attach" {
 #---------------------------------------------------------------
 # IAM Role for Service Account - CoreDNS
 #---------------------------------------------------------------
+resource "random_pet" "coredns_pet" {
+  length = 2
+}
 resource "aws_iam_role" "coredns_role" {
-  name = "${var.cluster-name}-coredns-role"
+  name = "${var.cluster-name}-coredns-role-${random_pet.coredns_pet.id}"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -61,8 +68,11 @@ resource "aws_iam_role_policy_attachment" "coredns_policy_attach" {
 #---------------------------------------------------------------
 # IAM Role for Service Account - Kube Proxy
 #---------------------------------------------------------------
+resource "random_pet" "kube_proxy_pet" {
+  length = 2
+}
 resource "aws_iam_role" "kube_proxy_role" {
-  name = "${var.cluster-name}-kube-proxy-role"
+  name = "${var.cluster-name}-kube-proxy-role-${random_pet.kube_proxy_pet.id}"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
