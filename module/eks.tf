@@ -34,10 +34,11 @@ resource "aws_iam_openid_connect_provider" "eks-oidc" {
 
 # AddOns for EKS Cluster
 resource "aws_eks_addon" "eks-addons" {
-  for_each      = { for idx, addon in var.addons : idx => addon }
-  cluster_name  = aws_eks_cluster.eks[0].name
-  addon_name    = each.value.name
-  addon_version = each.value.version
+  for_each               = { for idx, addon in var.addons : idx => addon }
+  cluster_name           = aws_eks_cluster.eks[0].name
+  addon_name             = each.value.name
+  addon_version          = each.value.version
+  service_account_role_arn = each.value.name == "aws-ebs-csi-driver" ? aws_iam_role.ebs_csi_driver_role.arn : each.value.name == "coredns" ? aws_iam_role.coredns_role.arn : each.value.name == "kube-proxy" ? aws_iam_role.kube_proxy_role.arn : null
   timeouts {
     create = "60m"
     delete = "60m"
