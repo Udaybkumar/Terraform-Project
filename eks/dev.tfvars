@@ -34,11 +34,11 @@ max_capacity_spot          = "10"
 addons = [
   {
     name    = "vpc-cni",
-    version = "v1.20.0-eksbuild.1"
+    version = "v1.20.4-eksbuild.1"
   },
   {
     name    = "coredns",
-    version = "v1.12.2-eksbuild.4"
+    version = "v1.12.4-eksbuild.1"
   },
   {
     name    = "kube-proxy"
