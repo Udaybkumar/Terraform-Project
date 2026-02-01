@@ -71,11 +71,11 @@ resource "aws_iam_role_policy_attachment" "eks-AmazonEBSCSIDriverPolicy" {
 # OIDC
 resource "aws_iam_role" "eks_oidc" {
   assume_role_policy = data.aws_iam_policy_document.eks_oidc_assume_role_policy.json
-  name               = "eks-oidc"
+  name               = "${local.cluster_name}-oidc-role"
 }
 
 resource "aws_iam_policy" "eks-oidc-policy" {
-  name = "test-policy"
+  name = "${local.cluster_name}-oidc-policy"
 
   policy = jsonencode({
     Statement = [{
