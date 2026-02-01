@@ -38,6 +38,11 @@ resource "aws_eks_addon" "eks-addons" {
   cluster_name  = aws_eks_cluster.eks[0].name
   addon_name    = each.value.name
   addon_version = each.value.version
+  timeouts {
+    create = "60m"
+    delete = "60m"
+    update = "60m"
+  }
 
   depends_on = [
     aws_eks_node_group.ondemand-node,
